@@ -13,9 +13,6 @@ TSQLUnit is a framework to write tests for applications written in Transact-SQL.
 **Author**: [Henrik Ekelund](https://sourceforge.net/u/ekelund/profile/)  
 **Project space at Sourceforge**: [TSQLUnit](https://sourceforge.net/projects/tsqlunit/)
 
-## License
-LGPL, see http://www.opensource.org/licenses/lgpl-license.php
-
 ## Release history
 ### Release 0.92
 1. Adds Assert function
@@ -31,3 +28,4 @@ Fixed bugs:
 7. Return success or failure on x complete	
 
 ### Original release 0.9
+--
