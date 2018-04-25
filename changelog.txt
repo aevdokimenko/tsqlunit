@@ -1,0 +1,5 @@
+Bug-fix release 0.91
+
+Visit https://sourceforge.net/apps/trac/tsqlunit/query?status=closed&group=resolution&milestone=Bug-fix+release+0.91
+for the change log.
+
