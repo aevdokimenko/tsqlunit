@@ -2,25 +2,19 @@
 
 TSQLUnit is a framework to write tests for applications written in Transact-SQL. It follows the tradition of the "xUnit" framework that is available for almost all programming languages.
 
-
 ## Installation
-*To be reviewed*
 1. Unzip the file.Unzip the file. You can use winzip or the open source 7-zip. 
 2. Connect to your database as dbo using the SQL Query Analyzer, execute the tsqlunit.sql file. 
 
-
 ## Remove
 1. Connect to your database as dbo using the SQL Query Analyzer, execute the removetsqlunit.sql file.
-
 
 ## Original project
 **Author**: [Henrik Ekelund](https://sourceforge.net/u/ekelund/profile/) 
 **Project space at Sourceforge**: [TSQLUnit](https://sourceforge.net/projects/tsqlunit/)
 
-
 ## License
 LGPL, see http://www.opensource.org/licenses/lgpl-license.php
-
 
 ## Release history
 ### Release 0.92
