@@ -22,8 +22,8 @@ LGPL, see http://www.opensource.org/licenses/lgpl-license.php
 
 ### Bug-fix release 0.91
 Fixed bugs:
-1. Fail Message Limitation	aevdokimenko	
-2. Line 43 of proc tsu_error raises errors	aevdokimenko	
+1. Fail Message Limitation		
+2. Line 43 of proc tsu_error raises errors	
 3. I can't install on DB with collation %_CS_%  (case sensitive)	
 4. Test suite name is not displayed in output	
 5. Mis-spelled Columns and SP Names	
