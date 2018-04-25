@@ -1,4 +1,4 @@
--- VERSION:         tsqlunit-0.91
+-- VERSION:         tsqlunit-0.92
 -- COPYRIGHT:
 --    Copyright (C) 2002-2009  Henrik Ekelund 
 --    Email: <http://sourceforge.net/sendmessage.php?touser=618411>
@@ -17,6 +17,10 @@
 --    License along with this library; if not, write to the Free Software
 --    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+SET ANSI_NULLS ON 
+GO
+
+-- Create tables --
 CREATE TABLE [dbo].[tsuActiveTest] (
 	[isError] [bit] NOT NULL ,
 	[isFailure] [bit] NOT NULL ,
@@ -60,13 +64,7 @@ CREATE TABLE [dbo].[tsuTestResults] (
 ) ON [PRIMARY]
 GO
 
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
-GO
-
-
-
+-- Create stored procedures --
 
 CREATE PROCEDURE tsu_describe
 -- GENERAL INFO:    This stored procedure is a part of the tsqlunit
@@ -83,7 +81,7 @@ CREATE PROCEDURE tsu_describe
 --                      HASSETUP:       1 if the suite has a setup procedure.
 --                      HASTEARDOWN:    1 if the suite has a teardown procedure.    
 -- 
--- VERSION:         tsqlunit-0.91
+-- VERSION:         tsqlunit-0.92
 -- COPYRIGHT:
 --    Copyright (C) 2002-2009  Henrik Ekelund 
 --    Email: <http://sourceforge.net/sendmessage.php?touser=618411>
@@ -173,24 +171,9 @@ CLOSE testcases_cursor
 DEALLOCATE testcases_cursor
 
 SELECT TESTNAME, SUITE, HASSETUP, HASTEARDOWN FROM #result
-
-
-
-
-GO
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
 GO
 
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
-GO
-
-
-
-CREATE   PROCEDURE tsu__private_addError @test NVARCHAR(255), @errorMessage NVARCHAR(255)
+CREATE PROCEDURE tsu__private_addError @test NVARCHAR(255), @errorMessage NVARCHAR(255)
 -- GENERAL INFO:    This stored procedure is a part of the tsqlunit
 --                  unit testing framework. It is open source software
 --                  available at http://tsqlunit.sourceforge.net
@@ -201,7 +184,7 @@ CREATE   PROCEDURE tsu__private_addError @test NVARCHAR(255), @errorMessage NVAR
 --
 -- RETURNS:         Nothing
 -- 
--- VERSION:         tsqlunit-0.91
+-- VERSION:         tsqlunit-0.92
 -- COPYRIGHT:
 --    Copyright (C) 2002-2009  Henrik Ekelund 
 --    Email: <http://sourceforge.net/sendmessage.php?touser=618411>
@@ -228,20 +211,8 @@ SET @id=(SELECT MAX(testResultID) FROM tsuTestResults)
 INSERT INTO tsuErrors( test, message, testResultID) VALUES(@test,@errorMessage, @id)
 
 GO
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
-GO
 
-SET QUOTED_IDENTIFIER ON 
-GO
-SET ANSI_NULLS ON 
-GO
-
-
-
-
-CREATE   PROCEDURE tsu__private_addFailure @test NVARCHAR(255), @errorMessage NVARCHAR(255)
+CREATE PROCEDURE tsu__private_addFailure @test NVARCHAR(255), @errorMessage NVARCHAR(255)
 -- GENERAL INFO:    This stored procedure is a part of the tsqlunit
 --                  unit testing framework. It is open source software
 --                  available at http://tsqlunit.sourceforge.net
@@ -252,7 +223,7 @@ CREATE   PROCEDURE tsu__private_addFailure @test NVARCHAR(255), @errorMessage NV
 --
 -- RETURNS:         Nothing
 -- 
--- VERSION:         tsqlunit-0.91
+-- VERSION:         tsqlunit-0.92
 -- COPYRIGHT:
 --    Copyright (C) 2002-2009  Henrik Ekelund 
 --    Email: <http://sourceforge.net/sendmessage.php?touser=618411>
@@ -276,21 +247,7 @@ DECLARE @id INTEGER
 SET @id=(SELECT MAX(testResultID) FROM tsuTestResults)
 
 INSERT INTO tsuFailures( test, message, testResultID) VALUES(@test, @errorMessage, @id)
-
-
-
 GO
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
-GO
-
-SET QUOTED_IDENTIFIER ON 
-GO
-SET ANSI_NULLS ON 
-GO
-
-
 
 CREATE PROCEDURE tsu__private_createTestResult @suiteName NVARCHAR(255)=''
 -- GENERAL INFO:    This stored procedure is a part of the tsqlunit
@@ -303,7 +260,7 @@ CREATE PROCEDURE tsu__private_createTestResult @suiteName NVARCHAR(255)=''
 --
 -- RETURNS:         Nothing
 -- 
--- VERSION:         tsqlunit-0.91
+-- VERSION:         tsqlunit-0.92
 -- COPYRIGHT:
 --    Copyright (C) 2002-2009  Henrik Ekelund 
 --    Email: <http://sourceforge.net/sendmessage.php?touser=618411>
@@ -331,19 +288,8 @@ IF @@ERROR <>0
 
 
 GO
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
-GO
 
-SET QUOTED_IDENTIFIER ON 
-GO
-SET ANSI_NULLS ON 
-GO
-
-
-
-CREATE  PROCEDURE tsu__private_showTestResult 
+CREATE PROCEDURE tsu__private_showTestResult 
     @testResultID INTEGER 
 -- GENERAL INFO:    This stored procedure is a part of the tsqlunit
 --                  unit testing framework. It is open source software
@@ -354,7 +300,7 @@ CREATE  PROCEDURE tsu__private_showTestResult
 --
 -- RETURNS:         Nothing
 -- 
--- VERSION:         tsqlunit-0.91
+-- VERSION:         tsqlunit-0.92
 -- COPYRIGHT:
 --    Copyright (C) 2002-2009  Henrik Ekelund 
 --    Email: <http://sourceforge.net/sendmessage.php?touser=618411>
@@ -405,18 +351,6 @@ END
 
 
 GO
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
-GO
-
-SET QUOTED_IDENTIFIER ON 
-GO
-SET ANSI_NULLS ON 
-GO
-
-
-
 
 CREATE PROCEDURE tsu_error 
 	@errorNr INT 
@@ -431,7 +365,7 @@ CREATE PROCEDURE tsu_error
 --
 -- RETURNS:         Nothing
 -- 
--- VERSION:         tsqlunit-0.91
+-- VERSION:         tsqlunit-0.92
 -- COPYRIGHT:
 --    Copyright (C) 2002-2009  Henrik Ekelund 
 --    Email: <http://sourceforge.net/sendmessage.php?touser=618411>
@@ -474,19 +408,8 @@ END
 
 
 GO
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
-GO
 
-SET QUOTED_IDENTIFIER ON 
-GO
-SET ANSI_NULLS ON 
-GO
-
-
-
-CREATE  PROCEDURE tsu_failure 
+CREATE PROCEDURE tsu_failure 
 	@message NVARCHAR(255)
 -- GENERAL INFO:    This stored procedure is a part of the tsqlunit
 --                  unit testing framework. It is open source software
@@ -498,7 +421,7 @@ CREATE  PROCEDURE tsu_failure
 --
 -- RETURNS:         Nothing
 -- 
--- VERSION:         tsqlunit-0.91
+-- VERSION:         tsqlunit-0.92
 -- COPYRIGHT:
 --    Copyright (C) 2002-2009  Henrik Ekelund 
 --    Email: <http://sourceforge.net/sendmessage.php?touser=618411>
@@ -529,19 +452,6 @@ END
 
 
 GO
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
-GO
-
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
-GO
-
-
-
-
 
 CREATE PROCEDURE tsu_runTestSuite @suite NVARCHAR(255)
 -- GENERAL INFO:    This stored procedure is a part of the tsqlunit
@@ -557,7 +467,7 @@ CREATE PROCEDURE tsu_runTestSuite @suite NVARCHAR(255)
 --
 -- RETURNS:         Nothing
 -- 
--- VERSION:         tsqlunit-0.91
+-- VERSION:         tsqlunit-0.92
 -- COPYRIGHT:
 --    Copyright (C) 2002-2009  Henrik Ekelund 
 --    Email: <http://sourceforge.net/sendmessage.php?touser=618411>
@@ -734,21 +644,8 @@ END
 
 
 GO
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
-GO
 
-SET QUOTED_IDENTIFIER ON 
-GO
-SET ANSI_NULLS ON 
-GO
-
-
-
-
-
-CREATE    PROCEDURE tsu_showTestResults 
+CREATE PROCEDURE tsu_showTestResults 
 	@startTime datetime=NULL,
 	@endTime datetime=NULL 
 -- GENERAL INFO:    This stored procedure is a part of the tsqlunit
@@ -761,7 +658,7 @@ CREATE    PROCEDURE tsu_showTestResults
 --
 -- RETURNS:         Nothing
 -- 
--- VERSION:         tsqlunit-0.91
+-- VERSION:         tsqlunit-0.92
 -- COPYRIGHT:
 --    Copyright (C) 2002-2009  Henrik Ekelund 
 --    Email: <http://sourceforge.net/sendmessage.php?touser=618411>
@@ -808,12 +705,6 @@ END
 
 
 GO
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
-GO
-
-
 
 CREATE PROCEDURE tsu_runTests
 	@suite NVARCHAR(255)='' OUTPUT,
@@ -841,7 +732,7 @@ CREATE PROCEDURE tsu_runTests
 -- AE, 2009-07-02, ENHANCEMENT: https://sourceforge.net/apps/trac/tsqlunit/ticket/1 
 -- RETURNS:         0 if all tests ran successfully, 1 otherwise. 
 -- 
--- VERSION:         tsqlunit-0.91
+-- VERSION:         tsqlunit-0.92
 -- COPYRIGHT:
 --    Copyright (C) 2002-2009  Henrik Ekelund 
 --    Email: <http://sourceforge.net/sendmessage.php?touser=618411>
@@ -952,7 +843,57 @@ END
 
 
 GO
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
+
+CREATE PROCEDURE tsu_AssertEqual 
+	@expected sql_variant, 
+	@actual sql_variant
+		
+-- GENERAL INFO:    This stored procedure is a part of the tsqlunit
+--                  unit testing framework. It is open source software
+--                  available at http://tsqlunit.sourceforge.net
+--
+-- DESCRIPTION:     Simplifies creation of assertions. 
+--                  
+-- PARAMETERS:      @expected       Expected value
+--                  @actual         Actual value
+-- 
+-- VERSION:         tsqlunit-0.92
+--
+-- Author:			Luke Winikates (rukednous)
+--
+-- COPYRIGHT:
+--    Copyright (C) 2002-2011  Henrik Ekelund 
+--    Email: <http://sourceforge.net/sendmessage.php?touser=618411>
+--
+--    This library is free software; you can redistribute it and/or
+--    modify it under the terms of the GNU Lesser General Public
+--    License as published by the Free Software Foundation; either
+--    version 2.1 of the License, or (at your option) any later version.
+--
+--    This library is distributed in the hope that it will be useful,
+--    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+--    Lesser General Public License for more details.
+--
+--    You should have received a copy of the GNU Lesser General Public
+--    License along with this library; if not, write to the Free Software
+--    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA         
+	
+AS
+BEGIN
+	SET NOCOUNT ON;
+	IF	(
+		@expected != @actual or 
+		@expected is null and @actual is not null or
+		@expected is not null and @actual is null
+		)
+	BEGIN
+		DECLARE @msg nvarchar(255)
+		SELECT @msg = 'Expected: ' 
+				+isnull(cast(@expected as nvarchar(55)),'NULL')
+				+' Was: '
+				+isnull(cast(@actual as nvarchar(55)),'NULL');
+		EXEC tsu_failure @msg;
+	END	
+END
 GO

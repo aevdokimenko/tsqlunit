@@ -1,3 +1,7 @@
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsu_AssertEqual]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[tsu_AssertEqual]
+GO
+
 if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsu_describe]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
 drop procedure [dbo].[tsu_describe]
 GO
@@ -42,6 +46,7 @@ if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsuActiveT
 drop table [dbo].[tsuActiveTest]
 GO
 
+
 if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsuErrors]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
 drop table [dbo].[tsuErrors]
 GO
@@ -57,3 +62,4 @@ GO
 if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsuTestResults]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
 drop table [dbo].[tsuTestResults]
 GO
+

@@ -1,5 +1,15 @@
-Bug-fix release 0.91
+Release 0.92
+https://sourceforge.net/apps/trac/tsqlunit/query?group=resolution&milestone=0.92
+#12	Adds Assert function
 
-Visit https://sourceforge.net/apps/trac/tsqlunit/query?status=closed&group=resolution&milestone=Bug-fix+release+0.91
-for the change log.
+Bug-fix release 0.91
+https://sourceforge.net/apps/trac/tsqlunit/query?status=closed&group=resolution&milestone=Bug-fix+release+0.91
+2	Fail Message Limitation	aevdokimenko	
+3	Line 43 of proc tsu_error raises errors	aevdokimenko	
+4	can't install on DB with collation %_CS_%  (case sensitive)	
+6	Test suite name is not displayed in output	
+8	Mis-spelled Columns and SP Names	
+9	Rollback transaction problem	
+1	Return success or failure on x complete	
+
 
