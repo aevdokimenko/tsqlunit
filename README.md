@@ -10,8 +10,7 @@ TSQLUnit is a framework to write tests for applications written in Transact-SQL.
 1. Connect to your database as dbo using the SQL Query Analyzer, execute the removetsqlunit.sql file.
 
 ## Original project
-**Author**: [Henrik Ekelund](https://sourceforge.net/u/ekelund/profile/)
-
+**Author**: [Henrik Ekelund](https://sourceforge.net/u/ekelund/profile/)  
 **Project space at Sourceforge**: [TSQLUnit](https://sourceforge.net/projects/tsqlunit/)
 
 ## License
