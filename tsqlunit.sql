@@ -897,3 +897,257 @@ BEGIN
 	END	
 END
 GO
+
+-- Added for backwards compatibility to a proc created when dbo.tsu_AssertEqual did not exist yet
+CREATE PROCEDURE dbo.tsu_AssertEquals
+    @Expected SQL_VARIANT,
+    @Actual SQL_VARIANT,
+    @Message NVARCHAR(MAX) = ''
+AS
+BEGIN
+	EXEC dbo.tsu_AssertEqual @Expected, @Actual
+END
+GO
+
+-- Generates xml in JUnit XML format to be able to use in compatible reporting tools
+CREATE PROCEDURE dbo.tsu_ResultsAsJUnitXML
+AS
+BEGIN
+	DECLARE @xmlOut xml
+	SELECT @xmlOut = (SELECT * FROM (
+	SELECT
+		1 [Tag],
+		null [Parent],
+		'root' [testsuites!1!hide!hide],
+		NULL AS [testsuite!2!id],
+		NULL AS [testsuite!2!name],
+		NULL AS [testsuite!2!tests],
+		NULL AS [testsuite!2!errors],
+		NULL AS [testsuite!2!failures],
+		NULL AS [testsuite!2!timestamp],
+		NULL AS [testsuite!2!time],
+		NULL AS [testsuite!2!hostname],
+		NULL AS [testsuite!2!package],
+		NULL AS [properties!3!hide!hide],
+		NULL AS [testcase!4!classname],
+		NULL AS [testcase!4!name],
+		NULL AS [testcase!4!time],
+		NULL AS [failure!5!message],
+		NULL AS [failure!5!type],
+		NULL AS [error!6!message],
+		NULL AS [error!6!type],
+		NULL AS [system-out!7!hide],
+		NULL AS [system-err!8!hide]
+	UNION ALL
+	SELECT 
+		2 [Tag],
+		1 [Parent],
+		'root', 
+		tr.testResultID,
+		tr.testName,
+		tr.runs,
+		ISNULL(count(e.testResultID), 0) AS [testsuite!2!errors],
+		COUNT(f.testResultID) AS [testsuite!2!failures],
+		CONVERT(VARCHAR(19), tr.startTime, 126) AS [testsuite!2!timestamp],
+		CAST(CAST(DATEDIFF(MILLISECOND,StartTime,StopTime)/1000.0 AS NUMERIC(20,3))AS VARCHAR(MAX)) AS [testsuite!2!time],
+		@@SERVERNAME AS [testsuite!2!hostname],
+		tr.testName AS [testsuite!2!package],
+		NULL AS [properties!3!hide!hide],
+		NULL AS [testcase!4!classname],
+		NULL AS [testcase!4!name],
+		NULL AS [testcase!4!time],
+		NULL AS [failure!5!message],
+		NULL AS [failure!5!type],
+		NULL AS [error!6!message],
+		NULL AS [error!6!type],
+		NULL AS [system-out!7!hide],
+		NULL AS [system-err!8!hide]
+	FROM dbo.tsuTestResults tr
+	LEFT JOIN dbo.tsuFailures f on tr.testResultID = f.testResultID
+	LEFT JOIN dbo.tsuErrors e ON tr.testResultID = e.testResultID
+	GROUP BY 	tr.testResultID, tr.testName, tr.runs, tr.startTime, tr.stopTime
+	UNION ALL
+	SELECT 3 AS Tag,
+			2 AS Parent,
+			'root',
+			tr.testResultID,
+			tr.testName,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			tr.testName,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL
+	FROM dbo.tsuTestResults tr
+	GROUP BY tr.testResultID, tr.testName
+	UNION ALL
+	SELECT 
+		4 AS Tag,
+		2 AS Parent,
+		'root',
+			tr.testResultID,
+		tr.testName,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		tr.testName,
+		test,
+		CAST(CAST(DATEDIFF(MILLISECOND,StartTime,StopTime)/1000.0 AS NUMERIC(20,3))AS VARCHAR(MAX)),
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL
+	FROM dbo.tsuErrors e
+	JOIN dbo.tsuTestResults tr on e.testResultID = tr.testResultID
+	UNION ALL 
+	SELECT 
+		4 AS Tag,
+		2 AS Parent,
+		'root',
+			tr.testResultID,
+		tr.testName,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		tr.testName,
+		test,
+		CAST(CAST(DATEDIFF(MILLISECOND,StartTime,StopTime)/1000.0 AS NUMERIC(20,3))AS VARCHAR(MAX)),
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL
+	FROM dbo.tsuFailures f
+	JOIN dbo.tsuTestResults tr on f.testResultID = tr.testResultID
+	GROUP BY tr.testResultID, tr.testName, test, startTime, stopTime
+	UNION ALL
+	SELECT 
+		5 AS Tag,
+		4 AS Parent,
+		'root',
+			tr.testResultID,
+		tr.testName,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		tr.testName,
+		test,
+		CAST(CAST(DATEDIFF(MILLISECOND,StartTime,StopTime)/1000.0 AS NUMERIC(20,3))AS VARCHAR(MAX)),
+		message,
+		'tSQLUnit.Fail',
+		NULL,
+		NULL,
+		NULL,
+		NULL
+	FROM dbo.tsuFailures f
+	JOIN dbo.tsuTestResults tr on f.testResultID = tr.testResultID
+	UNION ALL
+	SELECT 
+		6 AS Tag,
+		4 AS Parent,
+		'root',
+			tr.testResultID,
+		tr.testName,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		tr.testName,
+		test,
+		CAST(CAST(DATEDIFF(MILLISECOND,StartTime,StopTime)/1000.0 AS NUMERIC(20,3))AS VARCHAR(MAX)),
+		message,
+		'tSQLUnit.Error',
+		NULL,
+		NULL,
+		NULL,
+		NULL
+	FROM dbo.tsuErrors e
+	JOIN dbo.tsuTestResults tr on e.testResultID = tr.testResultID
+	UNION ALL
+	SELECT 7 AS Tag,
+		2 AS Parent,
+		'root',
+		testResultID,
+		testName,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		testName,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL
+	FROM dbo.tsuTestResults
+	UNION ALL
+	SELECT 8 AS Tag,
+		2 AS Parent,
+		'root',
+		testResultID,
+		testName,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		testName,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL
+	FROM dbo.tsuTestResults
+	) X
+	ORDER BY [testsuite!2!name],CASE WHEN Tag IN (7,8) THEN 1 ELSE 0 END, [testcase!4!name], Tag
+	FOR XML EXPLICIT)
+
+	SELECT @xmlOut FOR XML PATH('');
+END
+GO
