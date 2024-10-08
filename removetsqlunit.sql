@@ -1,65 +1,65 @@
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsu_AssertEqual]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure [dbo].[tsu_AssertEqual]
+-- Drop procedures if they exist
+IF OBJECT_ID(N'[dbo].[tsu_AssertEqual]', N'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[tsu_AssertEqual];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsu_describe]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure [dbo].[tsu_describe]
+IF OBJECT_ID(N'[dbo].[tsu_describe]', N'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[tsu_describe];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsu__private_addError]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure [dbo].[tsu__private_addError]
+IF OBJECT_ID(N'[dbo].[tsu__private_addError]', N'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[tsu__private_addError];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsu__private_addFailure]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure [dbo].[tsu__private_addFailure]
+IF OBJECT_ID(N'[dbo].[tsu__private_addFailure]', N'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[tsu__private_addFailure];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsu__private_createTestResult]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure [dbo].[tsu__private_createTestResult]
+IF OBJECT_ID(N'[dbo].[tsu__private_createTestResult]', N'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[tsu__private_createTestResult];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsu__private_showTestResult]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure [dbo].[tsu__private_showTestResult]
+IF OBJECT_ID(N'[dbo].[tsu__private_showTestResult]', N'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[tsu__private_showTestResult];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsu_error]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure [dbo].[tsu_error]
+IF OBJECT_ID(N'[dbo].[tsu_error]', N'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[tsu_error];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsu_failure]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure [dbo].[tsu_failure]
+IF OBJECT_ID(N'[dbo].[tsu_failure]', N'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[tsu_failure];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsu_runTestSuite]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure [dbo].[tsu_runTestSuite]
+IF OBJECT_ID(N'[dbo].[tsu_runTestSuite]', N'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[tsu_runTestSuite];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsu_runTests]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure [dbo].[tsu_runTests]
+IF OBJECT_ID(N'[dbo].[tsu_runTests]', N'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[tsu_runTests];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsu_showTestResults]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure [dbo].[tsu_showTestResults]
+IF OBJECT_ID(N'[dbo].[tsu_showTestResults]', N'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[tsu_showTestResults];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsuActiveTest]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
-drop table [dbo].[tsuActiveTest]
+-- Drop tables if they exist
+IF OBJECT_ID(N'[dbo].[tsuActiveTest]', N'U') IS NOT NULL
+    DROP TABLE [dbo].[tsuActiveTest];
 GO
 
-
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsuErrors]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
-drop table [dbo].[tsuErrors]
+IF OBJECT_ID(N'[dbo].[tsuErrors]', N'U') IS NOT NULL
+    DROP TABLE [dbo].[tsuErrors];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsuFailures]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
-drop table [dbo].[tsuFailures]
+IF OBJECT_ID(N'[dbo].[tsuFailures]', N'U') IS NOT NULL
+    DROP TABLE [dbo].[tsuFailures];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsuLastTestResult]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
-drop table [dbo].[tsuLastTestResult]
+IF OBJECT_ID(N'[dbo].[tsuLastTestResult]', N'U') IS NOT NULL
+    DROP TABLE [dbo].[tsuLastTestResult];
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[tsuTestResults]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
-drop table [dbo].[tsuTestResults]
+IF OBJECT_ID(N'[dbo].[tsuTestResults]', N'U') IS NOT NULL
+    DROP TABLE [dbo].[tsuTestResults];
 GO
-
